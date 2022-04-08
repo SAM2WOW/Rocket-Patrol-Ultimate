@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rocket Patrol Ultimate</title>
+
+    <!-- Pixel Font from https://www.dafont.com/bitmap.php -->
+    <!-- Free for personal and commercial use! -->
+    <link rel="preload" as="font" href="assets/retro.ttf" type="font/ttf" />
+    
     <script src="lib/phaser.js"></script>
     <script src="src/scenes/menu.js"></script>
 
@@ -15,10 +20,17 @@
 
     <style>
         body {
-            background-color: whitesmoke;
+            background-color: green;
+        }
+
+        @font-face {
+            font-family: PixelFont;
+            src: url('assets/retro.ttf');
         }
     </style>
 </head>
 <body>
+    <!-- Load in the custom font -->
+    <div style="font-family:PixelFont; position:absolute; left:-1000px; visibility:hidden;">.</div>
 </body>
 </html>

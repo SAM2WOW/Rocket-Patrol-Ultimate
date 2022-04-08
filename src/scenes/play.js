@@ -53,7 +53,7 @@ class Play extends Phaser.Scene {
 
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'PixelFont',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -65,16 +65,40 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(game.config.width - borderUISize - borderPadding * 2 - 100, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+
+        // GAME OVER flag
+        this.gameOver = false;
+
+        // 60-second play clock
+        scoreConfig.fixedWidth = 0;
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+            this.gameOver = true;
+        }, null, this);
+
     }
 
     update() {
-        this.bg.tilePositionX -= 2;
+        // check key input for restart
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.scene.restart();
+        }
+
+        // keep for going back to menu
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start("menuScene");
+        }
 
         // update everything
-        this.rocket.update();
-        this.ship1.update();
-        this.ship2.update();
-        this.ship3.update();
+        if (!this.gameOver) {
+            this.bg.tilePositionX -= 2;
+
+            this.rocket.update();
+            this.ship1.update();
+            this.ship2.update();
+            this.ship3.update();
+        }
 
         // checking everything
         if (this.checCollision(this.rocket, this.ship1)) {
@@ -120,5 +144,7 @@ class Play extends Phaser.Scene {
         this.scoreLeft.text = this.p1Score;
         console.log(ship.points);
         console.log(this.p1Score);
+
+        this.sound.play('sfx_explosion');
     }
 }
