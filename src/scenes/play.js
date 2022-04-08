@@ -28,11 +28,11 @@ class Play extends Phaser.Scene {
         this.rocket.setOrigin(0.5, 0);
 
         // add 3 ship
-        this.ship1 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2, 'ship', 30);
+        this.ship1 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2, 'ship', 0, 30);
         this.ship1.setOrigin(0, 0);
-        this.ship2 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2 + 32, 'ship', 20);
+        this.ship2 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2 + 32, 'ship', 0, 20);
         this.ship2.setOrigin(0, 0);
-        this.ship3 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2 + 32 * 2, 'ship', 10);
+        this.ship3 = new Spaceship(this, Math.random() * game.config.width, game.config.height / 2 + 32 * 2, 'ship', 0, 10);
         this.ship3.setOrigin(0, 0);
         
         // explosion animation
@@ -56,7 +56,7 @@ class Play extends Phaser.Scene {
             fontFamily: 'Courier',
             fontSize: '28px',
             backgroundColor: '#F3B141',
-            color: 'black',
+            color: '#843605',
             align: 'right',
             padding: {
             top: 5,
@@ -114,5 +114,11 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;
             boom.destroy();
         });
+
+        // increase score
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
+        console.log(ship.points);
+        console.log(this.p1Score);
     }
 }
