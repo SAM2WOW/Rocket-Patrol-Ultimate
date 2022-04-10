@@ -59,12 +59,28 @@ class Play extends Phaser.Scene {
             color: '#843605',
             align: 'right',
             padding: {
-            top: 5,
-            bottom: 5,
+                top: 5,
+                bottom: 5,
             },
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(game.config.width - borderUISize - borderPadding * 2 - 100, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+
+        // display fire sign
+        let fireConfig = {
+            fontFamily: 'PixelFont',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.fireSign = this.add.text(game.config.width / 2 - 50, borderUISize + borderPadding * 2, 'FIRE', fireConfig);
+        this.fireSign.setAlpha(0);
 
         // GAME OVER flag
         this.gameOver = false;
@@ -113,6 +129,9 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.ship3);
             this.rocket.reset();
         }
+
+        // update fire sign
+        this.fireSign.setAlpha(this.rocket.isFiring ? 1 : 0);
     }
 
     checCollision(rocket, ship) {
