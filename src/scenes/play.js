@@ -97,7 +97,7 @@ class Play extends Phaser.Scene {
 
     }
 
-    update() {
+    update(time, delta) {
         // check key input for restart
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -110,12 +110,12 @@ class Play extends Phaser.Scene {
 
         // update everything
         if (!this.gameOver) {
-            this.bg.tilePositionX -= 2;
+            this.bg.tilePositionX -= 2 * delta / 16;
 
-            this.rocket.update();
-            this.ship1.update();
-            this.ship2.update();
-            this.ship3.update();
+            this.rocket.update(time, delta);
+            this.ship1.update(time, delta);
+            this.ship2.update(time, delta);
+            this.ship3.update(time, delta);
         }
 
         // checking everything
